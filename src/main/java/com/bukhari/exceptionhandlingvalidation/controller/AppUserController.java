@@ -21,17 +21,24 @@ public class AppUserController {
     private AppUserService appUserService;
 
     @PostMapping("/signup")
-    public ResponseEntity<AppUser> saveUser(@RequestBody @Valid AppUserRequest userRequest){
+    public ResponseEntity<AppUser> saveUser(@RequestBody @Valid AppUserRequest userRequest) {
         return new ResponseEntity<>(appUserService.saveUser(userRequest), HttpStatus.CREATED);
     }
 
     @GetMapping("/fetchAll")
-    public ResponseEntity<List<AppUser>> getAllUsers(){
+    public ResponseEntity<List<AppUser>> getAllUsers() {
         return ResponseEntity.ok(appUserService.getALlUsers());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AppUser> getUser(@PathVariable int id) throws UserNotFoundException {
         return ResponseEntity.ok(appUserService.getUser(id));
+    }
+
+    //Dummy user for CI/CD
+    @GetMapping
+    public ResponseEntity<AppUser> getDummyUser() {
+        AppUser appUser = new AppUser(34, "Syed Shujaat", "abc@gmail.com", "+9230498763212", "MALE", 22, "Pakistani");
+        return ResponseEntity.ok(appUser);
     }
 }
